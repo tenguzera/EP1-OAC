@@ -2,7 +2,7 @@
 
 int processa (short int *M, int memSize) {
   unsigned short int ri, pc, a, b, c, d, r, psw;
-  unsigned short int opArit;
+  unsigned short int opArit, res, op1, op2;
   pc=0;
 
   do {
@@ -41,10 +41,15 @@ int processa (short int *M, int memSize) {
 
         case 0x6000:
             //ARIT
-            opArit = M[ri & 0x0F00];
+            opArit = M[ri & 0x0E00];
+            res = M[ri & 0x01C0];
+            op1 = M[ri & 0x0038];
+            op2 = M[ri & 0x0007];
             
-            switch (opArit&1110){
+            switch (opArit){
+            	
             	case 000:
+            		
             		//Põe como resultado (FFFF)h
             		break;
             		
