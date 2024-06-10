@@ -2,6 +2,7 @@
 
 int processa (short int *M, int memSize) {
   unsigned short int ri, pc, a, b, c, d, r, psw;
+  unsigned short int opArit;
   pc=0;
 
   do {
@@ -15,28 +16,69 @@ int processa (short int *M, int memSize) {
 
         case 0x2000:
             //STA(x)
-            printf("STA\n");
             M[ri & 0x0FFF] = a;
             break;
 
         case 0x3000:
             //JMP(x)
-            printf("JMP\n");
+            r = M[pc+1];
+            ri = ri & 0xFFF;
             break;
 
         case 0x4000:
             //JNZ(x)
-            printf("JNZ\n");
+            if(a != 0x0000){
+            	r = M[pc+1];
+            	ri = ri & 0xFFF;
+            }
             break;
 
         case 0x5000:
             //RET
-            printf("RET\n");
+            r = M[pc+1];
+            ri = r & 0xFFF;
             break;
 
         case 0x6000:
             //ARIT
-            printf("ARIT\n");
+            opArit = M[ri & 0x0F00];
+            
+            switch (opArit&1110){
+            	case 000:
+            		//Põe como resultado (FFFF)h
+            		break;
+            		
+            	case 001:
+            		//Põe como resultado (0000)h
+            		break;
+            		
+            	case 010:
+            		//not(Op1)
+            		break;
+            		
+            	case 011:
+            		//and(Op1, Op2)
+            		break;
+            		
+            	case 100:
+            		//or(Op1, Op2)
+            		break;
+            		
+            	case 101:
+            		//xor(Op1, Op2)
+            		break;
+            		
+            	case 110:
+            		//add(Op1, Op2}
+            		break;
+            		
+            	case 111:
+            		//sub(Op1, Op2)
+            		break;
+            		
+            	default:
+            		break;
+            }
             break;
 
         default:
